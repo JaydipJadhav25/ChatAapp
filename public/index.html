@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat-app</title>
+</head>
+<body>
+    <h1>Chating</h1>
+
+    <!-- <button onclick="cretesocket()"> create ws connection </button> -->
+
+    <div id="massages"> </div>
+    <input type="text" name="" id="massage" placeholder="enter your massage">
+
+    <button id="sendBtn">send</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+//    function cretesocket(){
+//     const socket = io();
+//    }
+
+//apl refresh la connection krnar
+    const socket = io();
+
+    //refrence
+    const sendBtn = document.getElementById('sendBtn')
+    const massageInput = document.getElementById("massage")
+    const usermassage = document.getElementById("massages");
+
+
+    socket.on("massage" , (massage) =>{
+        // console.log(massage)
+        // usermassage.innerText = massage
+
+        const p = document.createElement('p');
+        p.innerText = massage;
+        usermassage.appendChild(p);
+    })
+    sendBtn.addEventListener('click' , e =>{
+        //massage genar user kdun 
+        const massage = massageInput.value;
+        console.log(massage)
+        //send this massage back-end 
+        socket.emit("user-massage", massage)
+    })
+
+
+    </script>
+</body>
+</html>
